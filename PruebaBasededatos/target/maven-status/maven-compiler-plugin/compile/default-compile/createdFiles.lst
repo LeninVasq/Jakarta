@@ -1,0 +1,6 @@
+modelos\Persona.class
+db\CN.class
+Controladores\ControllerPersona.class
+com\mycompany\pruebabasededatos\resources\JakartaEE10Resource.class
+modelosDAO\PersonaDAO.class
+com\mycompany\pruebabasededatos\JakartaRestConfiguration.class
