@@ -18,7 +18,9 @@ public class cn {
     public cn() throws ClassNotFoundException{
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/exame2", "root", "");
+            //con = DriverManager.getConnection("jdbc:mysql://localhost:3306/examen2", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/exame2?useUnicode=true&characterEncoding=UTF-8", "root", "");
+
         } 
         catch (SQLException e) {
             System.err.println("Error: " + e);

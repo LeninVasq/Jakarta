@@ -50,18 +50,17 @@ public class proyectosDao {
     }
     
     
-    public List<Map<String, Object>> listar2() {
+    public List<Map<String, Object>> listar2(int id) {
     List<Map<String, Object>> lista = new ArrayList<>();
 
     // Consulta SQL corregida para incluir 'empleado_id' y tabla correctamente referenciada
-    String sql = "SELECT p.id_proyecto, p.fecha_inicio, p.empleado_id, e.nombre_empleado " +
-                 "FROM proyectos p " +
-                 "JOIN Empleadps e ON p.empleado_id = e.id";
+    String sql = "SELECT id_proyecto, fecha_inicio,empleado_id,nombre_empleado FROM proyectos p JOIN empleadps e ON p.empleado_id = e.id WHERE id= ?";
 
     try {
-        con = CN.getCon();
-        ps = con.prepareStatement(sql);
-        rs = ps.executeQuery();
+         con= CN.getCon();
+           ps= con.prepareStatement(sql);
+           ps.setInt(1, id);
+           rs= ps.executeQuery();
         while (rs.next()) {
             // Crear una instancia de 'proyectos'
             proyectos proye = new proyectos();

@@ -22,7 +22,6 @@ import modelos.proyectos;
 import modelosDAO.empleadosDao;
 import modelosDAO.proyectosDao;
 
-
 /**
  *
  * @author Vasques
@@ -68,31 +67,29 @@ public class Contrrollerproyectos extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         RequestDispatcher dispatcher = null;
-    
-         
-    try {
+        RequestDispatcher dispatcher = null;
+        request.setCharacterEncoding("UTF-8");  // Asegúrate de que la solicitud esté en UTF-8
+        response.setContentType("text/html; charset=UTF-8");
 
-        proyectosDao proyectosdao = new proyectosDao();
-        empleadosDao personadao = new empleadosDao();
-       
-            
-        
-        // Mostrar la consulta
-       
-        List<empleados> consulta = personadao.listar();
-        request.setAttribute("consulta", consulta);
-         List<Map<String, Object>> consultapro = proyectosdao.listar2();
-        request.setAttribute("consultapro", consultapro);
-     
-        dispatcher = request.getRequestDispatcher("proyectos.jsp");
-        dispatcher.forward(request, response);
-        
-    } catch (ClassNotFoundException e) {
-       
-    }
-        
-        
+        try {
+
+            proyectosDao proyectosdao = new proyectosDao();
+            empleadosDao personadao = new empleadosDao();
+
+            // Mostrar la consulta
+            List<empleados> consulta = personadao.listar();
+            request.setAttribute("consulta", consulta);
+            int id = Integer.parseInt(request.getParameter("id"));
+            List<Map<String, Object>> consultapro = proyectosdao.listar2(id);
+            request.setAttribute("consultapro", consultapro);
+
+            dispatcher = request.getRequestDispatcher("proyectos.jsp");
+            dispatcher.forward(request, response);
+
+        } catch (ClassNotFoundException e) {
+
+        }
+
     }
 
     /**
@@ -106,12 +103,10 @@ public class Contrrollerproyectos extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         String action = request.getParameter("action");
+        String action = request.getParameter("action");
         RequestDispatcher dispatcher = null;
-    
-            
-             // Esto convierte directamente a java.sql.Date
 
+        // Esto convierte directamente a java.sql.Date
         try {
             empleadosDao personadao = new empleadosDao();
             proyectosDao proyectosdao = new proyectosDao();
@@ -119,35 +114,45 @@ public class Contrrollerproyectos extends HttpServlet {
                 proyectos persona = new proyectos();
 
                 int empleado_id = Integer.parseInt(request.getParameter("nombre"));
-            
-            
-           
-            String fechaString = request.getParameter("fecha");
-
-            
-            Date fecha = Date.valueOf(fechaString); 
                 
+                String fechaString = request.getParameter("fecha");
 
-                
+                Date fecha = Date.valueOf(fechaString);
+
+                empleadosDao empleadodao = new empleadosDao();
+
                 persona.setEmpleado_id(empleado_id);
                 persona.setFecha_inicio(fecha);
-                proyectosdao.agregar(persona); 
+                proyectosdao.agregar(persona);
+                List<empleados> consulta = personadao.listar();
+                
+                empleados empleados = empleadodao.ListarById(empleado_id);
+                request.setAttribute("persona", empleados);
+                request.setAttribute("consulta", consulta);
+
+                List<Map<String, Object>> consultapro = proyectosdao.listar2(empleado_id);
+                request.setAttribute("consultapro", consultapro);
 
                 
+                
+                
+                dispatcher = request.getRequestDispatcher("proyectos.jsp");
+                dispatcher.forward(request, response);
             }
-            
-            
+
             List<empleados> consulta = personadao.listar();
-        request.setAttribute("consulta", consulta);
-         List<Map<String, Object>> consultapro = proyectosdao.listar2();
-        request.setAttribute("consultapro", consultapro);
-     
-        dispatcher = request.getRequestDispatcher("proyectos.jsp");
-        dispatcher.forward(request, response);
+            request.setAttribute("consulta", consulta);
+
+            int id = Integer.parseInt(request.getParameter("id"));
+            List<Map<String, Object>> consultapro = proyectosdao.listar2(id);
+            request.setAttribute("consultapro", consultapro);
+
+            dispatcher = request.getRequestDispatcher("proyectos.jsp");
+            dispatcher.forward(request, response);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Contrrollerproyectos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     /**

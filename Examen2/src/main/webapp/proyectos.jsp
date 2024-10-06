@@ -1,9 +1,3 @@
-<%--
-    Document   : proyectos
-    Created on : 23 sept 2024, 8:27:30 a. m.
-    Author     : Vasques
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -11,11 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Personas</title>
+    <title>Registro de proyectos</title>
     <!-- Estilos CSS personalizados -->
     <link rel="stylesheet" href="styles.css">
 
-    <!-- Bootstrap CSS v5.3.2 -->
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
 
     <style>
@@ -24,256 +18,309 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f9;
+            font-family: 'Roboto', sans-serif;
+            background-color: #1c1c1e;
+            color: #ffffff;
             margin: 0;
             padding: 0;
         }
 
         .container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 30px;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #2c2c34;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         h3 {
             margin-bottom: 20px;
-            color: #444;
-            font-size: 1.75rem;
-            text-align: center;
-            border-bottom: 3px solid #007bff;
+            color: #ffffff;
+            font-size: 1.8rem;
+            text-align: left;
+            border-bottom: 4px solid #ff6f61;
             padding-bottom: 10px;
         }
 
         h3 span {
-            color: #6c757d;
-            font-size: 1rem;
+            color: #a1a1a5;
+            font-size: 0.9rem;
         }
 
         .form-section {
-            margin-bottom: 40px;
-            background-color: #f9fbfc;
-            padding: 20px;
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #3d3d45;
             border-radius: 10px;
-            border: 1px solid #e1e1e1;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         .input-group {
             margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
         }
 
         .input-group label {
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #495057;
+            display: block;
+            margin-bottom: 10px;
             font-size: 1.1rem;
+            color: #ff6f61;
         }
 
         .input-group input,
         .input-group select {
             width: 100%;
-            padding: 15px;
-            border: 2px solid #ced4da;
-            border-radius: 8px;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
             font-size: 1rem;
-            background-color: #f8f9fa;
-            transition: border-color 0.3s ease, background-color 0.3s ease;
+            background-color: #4c4c54;
+            color: #ffffff;
         }
 
         .input-group input:focus,
         .input-group select:focus {
-            border-color: #007bff;
-            background-color: #ffffff;
+            border: none;
+            background-color: #56565e;
             outline: none;
         }
 
         .btn-agregar {
             width: 100%;
-            padding: 15px;
-            background-color: bisque;
-            color: black;
+            padding: 12px;
+            background-color: #ff6f61;
+            color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             font-size: 1.1rem;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
         .btn-agregar:hover {
-            background-color: #ffcc99;
+            background-color: #ff3e2d;
         }
 
         .table-section h3 {
-            font-size: 1.5rem;
-            background-color: #007bff;
-            color: #fff;
-            padding: 15px;
-            border-radius: 8px;
+            font-size: 1.6rem;
+            background-color: #ff6f61;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
             margin-bottom: 20px;
-            text-align: center;
+            text-align: left;
         }
 
         table {
             width: 100%;
-            border-collapse: separate;
-            border-spacing: 0 15px;
+            border-collapse: collapse;
             margin-bottom: 20px;
         }
 
         table thead {
-            background-color: #f8f9fa;
-            color: #333;
+            background-color: #3d3d45;
+            color: #ff6f61;
             text-transform: uppercase;
             font-size: 0.9rem;
-            letter-spacing: 0.05em;
-            border-bottom: 3px solid #007bff;
         }
 
         table th, table td {
             padding: 15px;
             text-align: left;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            background-color: #4c4c54;
+            border-bottom: 1px solid #555;
         }
 
         table tbody tr:hover {
-            background-color: #f1f1f1;
+            background-color: #5a5a64;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
         .btn-edit, .btn-delete {
-            background-color: transparent;
+            background-color: #4c4c54;
             border: none;
             cursor: pointer;
             font-size: 18px;
             padding: 8px;
-            border-radius: 50%;
+            color: white;
             transition: background-color 0.3s ease;
         }
 
         .btn-edit:hover {
-            background-color: #007bff;
-            color: #fff;
+            background-color: #ff6f61;
         }
 
         .btn-delete:hover {
-            background-color: #dc3545;
-            color: #fff;
+            background-color: #ff3e2d;
         }
 
-        .btn-eliminar {
-            background-color: #dc3545;
-            color: #ffffff;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
+        /* Estilos para la paginación */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
         }
 
-        .btn-eliminar:hover {
-            background-color: #c82333;
+        .pagination a {
+            margin: 0 5px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+            background-color: #4c4c54;
+        }
+
+        .pagination a.btn-primary {
+            background-color: #ff6f61;
+        }
+
+        .pagination a:hover {
+            background-color: #ff3e2d;
         }
     </style>
 </head>
 
 <body>
 <header>
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" name="pagina" value="empleados" href="controllerempleados">Registrar empleados</a>
-            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="controllerempleados">Empleados</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavId">
-                <ul class="navbar-nav me-auto mt-2 mt-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="Contrrollerproyectos" aria-current="page">Proyectos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownId">
-                            <a class="dropdown-item" href="#">Action 1</a>
-                            <a class="dropdown-item" href="#">Action 2</a>
-                        </div>
-                    </li>
-                </ul>
-                <form class="d-flex my-2 my-lg-0">
-                    <input class="form-control me-sm-2" type="text" placeholder="Search"/>
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
+
+
             </div>
         </div>
     </nav>
 </header>
 
 <div class="container">
-    <!-- Formulario para registrar personas -->
+
+    <c:set var="pageSize" value="5"/>
+    <c:set var="page" value="${param.page != null ? param.page : 1}"/>
+    <c:set var="startIndex" value="${(page - 1) * pageSize}"/>
+    <c:set var="endIndex" value="${startIndex + pageSize}"/>
+
+    <c:if test="${endIndex > consultapro.size()}">
+        <c:set var="endIndex" value="${consultapro.size()}"/>
+    </c:if>
     <div class="form-section">
-        <h3>Información requerida: <span>Para registrar una nueva persona</span></h3>
+        <h3>Información: <span>Registrar Persona</span></h3>
         <form action="Contrrollerproyectos" method="post">
             <div class="input-group">
                 <label>Fecha de Inicio</label>
-                <input type="date" name="fecha" placeholder="Ingrese la fecha de inicio del proyecto">
+                <input type="date" id="fecha" name="fecha" placeholder="Ingrese la fecha de contratación" required>
+                <span id="error-message" style="color: red; display: none;"></span>
             </div>
 
             <div class="input-group">
                 <label for="nombre">Nombre</label>
-                <select name="nombre" id="nombre">
-                    <option value="" disabled selected>Seleccione un nombre</option>
-                    <c:forEach items="${consulta}" var="empleados">
-                        <option value="${empleados.id}">${empleados.nombre_empleado}</option>
-                    </c:forEach>
-                </select>
+                <input type="text" id="nombre"  nombre="n"  value="${persona.nombre_empleado}"  oninput="validarSoloLetras(this)" required>
             </div>
 
-            <button type="submit" name="action" value="agregar" class="btn-agregar">Registrar</button>
+            <div class="input-group">
+
+                <input type="hidden" id="id" name="nombre" value="${persona.id}" readonly required>
+            </div>
+
+            <button type="submit" name="action" value="agregar" class="btn-agregar"
+                    onclick="guardardatos('${persona.id}', '${persona.nombre_empleado}')">
+                Registrar
+            </button>
         </form>
     </div>
 
-    <!-- Tabla de consulta -->
+
     <div class="table-section">
-        <h3>Consulta General de personas</h3>
+        <h3>Lista de proyectos asignados</h3>
         <table>
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Proyecto</th>
-                <th>Persona Encargada del proyecto</th>
-
+                <th>Fecha</th>
+                <th>Encargado</th>
             </tr>
             </thead>
             <tbody>
             <c:forEach items="${consultapro}" var="item">
                 <tr>
-                    <!-- Accedemos al ID del proyecto desde el objeto proyectos -->
                     <td>${item.proyecto.id}</td>
-                    <!-- Accedemos a la fecha de inicio -->
                     <td>${item.proyecto.fecha_inicio}</td>
-
-                    <!-- Accedemos al nombre del empleado desde el mapa -->
                     <td>${item.nombreEmpleado}</td>
                 </tr>
             </c:forEach>
-
             </tbody>
         </table>
     </div>
+    <!-- Paginación -->
+    <div class="pagination">
+        <c:if test="${page > 1}">
+            <a href="controllerempleados?page=${page - 1}" class="btn btn-secondary">Anterior</a>
+        </c:if>
+
+
+        <c:set var="baseUrl" value="controllerempleados?page=" />
+
+
+
+        <c:forEach begin="1" end="${(consultapro.size() / pageSize) + (consultapro.size() % pageSize > 0 ? 1 : 0)}" var="p">
+            <a href="${baseUrl}${p}" class="btn ${p == page ? 'btn-primary' : 'btn-secondary'}">${p}</a>
+        </c:forEach>
+
+
+        <c:if test="${endIndex < consultapro.size()}">
+            <a href="controllerempleados?page=${page + 1}" class="btn btn-secondary">Siguiente</a>
+        </c:if>
+    </div>
 </div>
+
+
+
+<script>
+    const fechaInput = document.getElementById('fecha');
+    const errorMessage = document.getElementById('error-message');
+
+    // Establece la fecha mínima como hoy
+    const today = new Date();
+    // Esto crea un objeto Date con la fecha y hora actuales
+
+    // Restar un día
+    today.setDate(today.getDate() - 1); // Esto resta 1 al día actual
+    today.setHours(0, 0, 0, 0); // Asegura que la hora no afecte la comparación
+    const todayString = today.toISOString().split('T')[0]; // Formato YYYY-MM-DD
+    fechaInput.setAttribute('min', todayString);
+
+    // Validación al cambiar el valor
+    fechaInput.addEventListener('input', () => {
+        const selectedDate = new Date(fechaInput.value);
+
+        // Reinicia el mensaje de error
+        errorMessage.style.display = 'none';
+
+        // Verifica si la fecha seleccionada es anterior a hoy
+        if (selectedDate < today) {
+            errorMessage.textContent = 'La fecha no puede ser anterior a hoy.';
+            errorMessage.style.display = 'block';
+            fechaInput.value = ''; // Limpiar el campo
+        }
+    });
+
+    function guardardatos(id,nombre){
+
+          document.getElementById("nombre").value = nombre;
+          document.getElementById("id").value = id;
+
+          console.log(id, nombre);
+
+    }
+</script>
+
 
 <!-- Scripts de Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>
 </html>
+

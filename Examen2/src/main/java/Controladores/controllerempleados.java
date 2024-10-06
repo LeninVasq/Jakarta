@@ -67,22 +67,18 @@ public class controllerempleados extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher dispatcher = null;
-    
 
-    try {
-        empleadosDao personadao = new empleadosDao();
-        
-       
-            
-        
-        // Mostrar la consulta
-        List<empleados> consulta = personadao.listar();
-        request.setAttribute("consulta", consulta);
-        dispatcher = request.getRequestDispatcher("empleados.jsp");
-        dispatcher.forward(request, response);
-        
-    } catch (ClassNotFoundException e) {
-    }
+        try {
+            empleadosDao personadao = new empleadosDao();
+
+            // Mostrar la consulta
+            List<empleados> consulta = personadao.listar();
+            request.setAttribute("consulta", consulta);
+            dispatcher = request.getRequestDispatcher("empleados.jsp");
+            dispatcher.forward(request, response);
+
+        } catch (ClassNotFoundException e) {
+        }
     }
 
     /**
@@ -96,88 +92,85 @@ public class controllerempleados extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+       request.setCharacterEncoding("UTF-8");  // Asegúrate de que la solicitud esté en UTF-8
+        response.setContentType("text/html; charset=UTF-8");
+    
+    
         String action = request.getParameter("action");
         RequestDispatcher dispatcher = null;
-    
-            
-             // Esto convierte directamente a java.sql.Date
 
+        // Esto convierte directamente a java.sql.Date
         try {
+
             empleadosDao empleadodao = new empleadosDao();
             if ("agregar".equals(action)) {
                 empleados persona = new empleados();
 
                 String nombre = request.getParameter("nombre");
-            String puesto = request.getParameter("puesto");
-            
-           
-            String fechaString = request.getParameter("fecha");
+                String puesto = request.getParameter("puesto");
 
-            
-            Date fecha = Date.valueOf(fechaString); 
-                
+                String fechaString = request.getParameter("fecha");
+
+                Date fecha = Date.valueOf(fechaString);
 
                 persona.setNombre_empleado(nombre);
                 persona.setPuesto(puesto);
                 persona.setFecha(fecha);
-                empleadodao.agregar(persona); 
+                empleadodao.agregar(persona);
 
-                
-            }
-            else if("eliminar".equals(action)){
-                
+            } else if ("eliminar".equals(action)) {
+
                 int id = Integer.parseInt(request.getParameter("id"));
-                 empleadodao.eliminar(id);
-                
-            }
-               else if("actualizar".equals(action)){
-                 int id = Integer.parseInt(request.getParameter("id"));
-                 
+                empleadodao.eliminar(id);
 
-                // Establecer el id como atributo de la solicitud
-                request.setAttribute("id", id);
+            } else if ("actualizar".equals(action)) {
+                int id = Integer.parseInt(request.getParameter("id"));
+
                 empleados empleados = empleadodao.ListarById(id);
                 request.setAttribute("persona", empleados);
-            dispatcher = request.getRequestDispatcher("actualizaremple.jsp");
-            dispatcher.forward(request, response);
+                    dispatcher = request.getRequestDispatcher("actualizaremple.jsp");
+                dispatcher.forward(request, response);
 
-
-            }
-            else if("actualizar2".equals(action)){
+            } else if ("actualizar2".equals(action)) {
                 empleados persona = new empleados();
                 int id = Integer.parseInt(request.getParameter("id"));
-          
 
                 String nombre = request.getParameter("nombre");
-            String puesto = request.getParameter("puesto");
-            
-            // Obtener la fecha en formato String desde el formulario
-            String fechaString = request.getParameter("fecha");
+                String puesto = request.getParameter("puesto");
 
-            // Convertir la fecha a java.sql.Date usando valueOf, que espera el formato 'yyyy-MM-dd'
-            Date fecha = Date.valueOf(fechaString); 
-                
+                String fechaString = request.getParameter("fecha");
+
+                Date fecha = Date.valueOf(fechaString);
 
                 persona.setNombre_empleado(nombre);
                 persona.setPuesto(puesto);
                 persona.setFecha(fecha);
                 persona.setId(id);
-            empleadodao.actualiar(persona); 
-           
+                empleadodao.actualiar(persona);
 
-        }
+                
+
+               
+
+            }
             
-            
-            
+            else if ("agregarproye".equals(action)) {
+                int id = Integer.parseInt(request.getParameter("id"));
+
+                empleados empleados = empleadodao.ListarById(id);
+                request.setAttribute("persona", empleados);
+                dispatcher = request.getRequestDispatcher("Contrrollerproyectos");
+                dispatcher.forward(request, response);
+
+            }
+
             //actualizo la lista 
             List<empleados> consulta = empleadodao.listar();
-                request.setAttribute("consulta", consulta);
-                
-                 dispatcher = request.getRequestDispatcher("empleados.jsp");
-        dispatcher.forward(request, response);
-            
-            
+            request.setAttribute("consulta", consulta);
+
+            dispatcher = request.getRequestDispatcher("empleados.jsp");
+            dispatcher.forward(request, response);
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(controllerempleados.class.getName()).log(Level.SEVERE, null, ex);
         }
